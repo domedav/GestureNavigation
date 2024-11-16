@@ -1,0 +1,25 @@
+<resources>
+	<string name="app_name" translatable="false">Gesture Navigation</string>
+	<string name="accessibility_service_summary">Use your phone with modern gestures</string>
+	<string name="accessibility_service_description">If you disallow the application to use accessibility, it will not work at all!\n\tWhy is this needed?\n\t• The application can\'t do gesture detection without this\n\t• The application can\'t provide you with its core functionality without this\n\nHow to use?\nSingle Swipe\n\t• Swipe up quickly to get to your home\n\t• Swipe up quickly then hold for a bit to see recent applications\n\t• Swipe from the left or right quickly to the center to go back\n\t• Swipe from the left or right slowly to the center to take a screenshot\n\t• Swipe up and down without letting go to see your notifications\nDouble Swipe\n(Swipe up first then hold until you see the bar change colors)\n\t• Swipe up again to open the camera</string>
+	
+	<string name="main_missingperms_summary_text">Fix the following issues to continue!</string>
+	
+	<string name="main_allgood_summary_text">Bar not displayed?</string>
+	<string name="main_allgood_summary_text_button">Fix</string>
+	<string name="main_allgood_summary_text_button_result_toast">Fixed possible issues</string>
+	
+	<string name="main_relaunch_service_header">Seems like the service is not running</string>
+	<string name="main_relaunch_service_description">To relaunch it, you need to disable and re-enable the service in the settings.</string>
+	<string name="main_relaunch_service_description_later">Disable and Re-Enable \"Gesture Navigation\" in Accessibility!</string>
+	<string name="main_relaunch_service_positive_button">Proceed</string>
+	<string name="main_relaunch_service_negative_button">Cancel</string>
+	
+	<string name="main_missingperms_accessibility">Grant accessibility permissions to the app!</string>
+	<string name="main_missingperms_accessibility_description">Please find the app in the settings menu, and allow it to use accessibility.</string>
+	<string name="main_missingperms_accessibility_button">Grant Permissions</string>
+	
+	<string name="main_missingperms_navigation">You are not using the 3 button navigation!</string>
+	<string name="main_missingperms_navigation_description">Please witch your navigation mode to the 3 buttons (old style), as having multiple gesture navigation will freak out your phone.</string>
+	<string name="main_missingperms_navigation_button">Change Navigation</string>
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+	<style name="Theme.GestureNavigation" parent="Theme.Material3.DayNight.NoActionBar">
+		<item name="barColor">@color/bar_color</item>
+		<item name="barColorActive">@color/bar_color_active</item>
+	</style>
+	<style name="Theme.GestureNavigation.MaterialYou" parent="Theme.Material3.DynamicColors.DayNight">
+		<item name="barColor">@color/bar_color</item>
+		<item name="barColorActive">@color/bar_color_active</item>
+		<item name="textSizeBig">32sp</item>
+		<item name="textSizeMedium">22sp</item>
+		<item name="textSizeSmall">14sp</item>
+		<item name="android:textColor">?attr/colorOnBackground</item>
+		<item name="backgroundColor">?attr/backgroundColor</item>
+	</style>
+</resources>

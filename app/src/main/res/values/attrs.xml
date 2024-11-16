@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="ThemeOverlay">
+		<attr name="barColorActive" format="color" />
+		<attr name="barColor" format="color" />
+		
+		<attr name="textSizeBig" format="dimension"/>
+		<attr name="textSizeMedium" format="dimension"/>
+		<attr name="textSizeSmall" format="dimension"/>
+	</declare-styleable>
+</resources>

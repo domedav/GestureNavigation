@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="bar_color">#DEDEDE</color>
+	<color name="bar_color_active">#C4FFF4</color>
+	<color name="button_ripple">#22FFFFFF</color>
+</resources>
