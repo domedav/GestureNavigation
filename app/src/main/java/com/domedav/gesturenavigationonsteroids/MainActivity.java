@@ -1,12 +1,14 @@
 package com.domedav.gesturenavigationonsteroids;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,6 +36,23 @@ public class MainActivity extends AppCompatActivity {
 		});
 		
 		findViewById(R.id.navigation_wrong_popup_button).setOnClickListener(v -> {
+			if (android.os.Build.MANUFACTURER.toLowerCase().contains("huawei")) {
+				// Huawei-specific settings
+				showMaterialDialog(
+						getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_header),
+						getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_description),
+						getResources().getString(R.string.main_huawei_toast_positive_button),
+						getResources().getString(R.string.main_huawei_toast_negative_button),
+						() -> {
+							Intent intent = new Intent(Settings.ACTION_SETTINGS);
+							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+							Toast.makeText(getApplicationContext(), getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_description), Toast.LENGTH_LONG).show();
+						},
+						() -> {}
+				);
+				return;
+			}
 			Intent intent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			getApplicationContext().startActivity(intent);
@@ -44,21 +63,37 @@ public class MainActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), getResources().getString(R.string.main_allgood_summary_text_button_result_toast), Toast.LENGTH_SHORT).show();
 				return;
 			}
-			new MaterialAlertDialogBuilder(this)
-					.setTitle(getResources().getString(R.string.main_relaunch_service_header))
-					.setMessage(getResources().getString(R.string.main_relaunch_service_description))
-					.setCancelable(true)
-					.setPositiveButton(getResources().getString(R.string.main_relaunch_service_positive_button), (dialog, which) -> {
+			showMaterialDialog(
+					getResources().getString(R.string.main_relaunch_service_header),
+					getResources().getString(R.string.main_relaunch_service_description),
+					getResources().getString(R.string.main_relaunch_service_positive_button),
+					getResources().getString(R.string.main_relaunch_service_negative_button),
+					() -> {
 						Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						startActivity(intent);
 						Toast.makeText(getApplicationContext(), getResources().getString(R.string.main_relaunch_service_description_later), Toast.LENGTH_LONG).show();
-					})
-					.setNegativeButton(getResources().getString(R.string.main_relaunch_service_negative_button), (dialog, which) -> {
-						dialog.dismiss();
-					})
-					.show();
+					},
+					() -> {}
+			);
 		});
+		
+		findViewById(R.id.testing).setOnClickListener(v -> {
+			showMaterialDialog(
+					"getResources().getString(R.string.main_relaunch_service_header)",
+					"getResources().getString(R.string.main_relaunch_service_description)",
+					getResources().getString(R.string.main_relaunch_service_positive_button),
+					getResources().getString(R.string.main_relaunch_service_negative_button),
+					() -> {},
+					() -> {}
+			);
+		});
+		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+			// android 12 has the "Rubber Band" overscroll
+			// this is purely cosmetic
+			findViewById(R.id.main_scrollview).setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+		}
 		
 		setupUI();
 	}
@@ -109,5 +144,20 @@ public class MainActivity extends AppCompatActivity {
 		setVisibilityOfThreeButtonNavigationPopup(hasEnabledThreeButtonNavigation());
 		setVisibilityOfMainContent(hasEnabledAccessibilityService() && hasEnabledThreeButtonNavigation());
 		checkAbleToProceed();
+	}
+	
+	private void showMaterialDialog(String header, String description, String positiveButtonText, String negativeButtonText, VoidCallback onPositiveButtonClick, VoidCallback onNegativeButtonClick){
+		new MaterialAlertDialogBuilder(this, new ContextThemeWrapper(getApplicationContext(), R.style.Theme_GestureNavigation_MaterialYou_Alert).getThemeResId())
+				.setTitle(header)
+				.setMessage(description)
+				.setCancelable(true)
+				.setPositiveButton(positiveButtonText, (dialog, which) -> {
+					onPositiveButtonClick.invoke();
+				})
+				.setNegativeButton(negativeButtonText, (dialog, which) -> {
+					onNegativeButtonClick.invoke();
+					dialog.dismiss();
+				})
+				.show();
 	}
 }

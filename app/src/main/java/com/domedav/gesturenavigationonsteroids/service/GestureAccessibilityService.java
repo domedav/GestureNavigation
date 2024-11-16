@@ -2,9 +2,9 @@ package com.domedav.gesturenavigationonsteroids.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Insets;
 import android.graphics.PixelFormat;
@@ -59,6 +59,12 @@ public class GestureAccessibilityService extends AccessibilityService implements
 	
 	@Override
 	public void onInterrupt() {}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		forceRepaint();
+	}
 	
 	@Override
 	public void onCreate() {
@@ -366,18 +372,18 @@ public class GestureAccessibilityService extends AccessibilityService implements
 	
 	@NonNull
 	private Drawable getBarDrawableByState(boolean isActive){
-		Context context = getApplicationContext();
 		int color;
-		TypedValue outValue = new TypedValue();
-		context.getTheme().resolveAttribute(isActive ? R.attr.barColorActive : R.attr.barColor, outValue, true);
-		color = outValue.data;
-		
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.R && isActive){
-			ContextThemeWrapper wrapper = new ContextThemeWrapper(context, com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight);
-			color = MaterialColors.getColor(wrapper, com.google.android.material.R.attr.colorPrimaryVariant, color);
+			ContextThemeWrapper wrapper = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_GestureNavigation_MaterialYou);
+			color = MaterialColors.getColor(wrapper, com.google.android.material.R.attr.colorPrimaryVariant, getResources().getColor(R.color.bar_color_active, getTheme()));
+		}
+		else{
+			TypedValue outValue = new TypedValue();
+			ContextThemeWrapper wrapper = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_GestureNavigation);
+			wrapper.getTheme().resolveAttribute(isActive ? R.attr.barColorActive : R.attr.barColor, outValue, true);
+			color = outValue.data;
 		}
 		color = ColorUtils.setAlphaComponent(color, isActive ? 0x77 : 0x5F);
-		
 		return new ColorDrawable(color);
 	}
 }

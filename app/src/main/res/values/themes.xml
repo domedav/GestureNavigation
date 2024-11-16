@@ -12,4 +12,19 @@
 		<item name="android:textColor">?attr/colorOnBackground</item>
 		<item name="backgroundColor">?attr/backgroundColor</item>
 	</style>
+	<style name="Theme.GestureNavigation.MaterialYou.Alert" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
+		<item name="android:backgroundTint">?attr/colorSurfaceContainer</item>
+		<item name="materialButtonStyle">@style/CustomMaterialButtonStyle</item>
+	</style>
+	
+	<style name="CustomMaterialButtonStyle" parent="Widget.Material3.Button">
+		<item name="android:foregroundTint">?attr/colorPrimary</item>
+		<item name="android:background">@drawable/rounded_container</item>
+		<item name="android:backgroundTint">?attr/colorOnPrimary</item>
+		<item name="android:paddingStart">16dp</item>
+		<item name="android:paddingEnd">16dp</item>
+		<item name="android:paddingTop">12dp</item>
+		<item name="android:paddingBottom">12dp</item>
+		<item name="android:textSize">16sp</item>
+	</style>
 </resources>

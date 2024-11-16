@@ -22,7 +22,7 @@ public class AccessibilityCheckUtils {
 	
 	public static boolean isThreeButtonNavigationEnabled(@NonNull Context context) {
 		String navigationMode = Settings.Secure.getString(context.getContentResolver(), "navigation_mode");
-		return "0".equals(navigationMode);
+		return "0".equals(navigationMode) || "100".equals(navigationMode);
 	}
 	
 	public static boolean callForceRepaint() {

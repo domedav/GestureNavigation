@@ -11,6 +11,8 @@
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:layout_marginTop="12dp"
+		android:layout_marginBottom="12dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -28,11 +30,13 @@
 			android:textStyle="bold"/>
 		
 		<androidx.core.widget.NestedScrollView
+			android:id="@+id/main_scrollview"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:layout_constraintTop_toBottomOf="@id/topBar"
 			android:layout_marginTop="12dp"
-			android:layout_marginBottom="12dp">
+			android:layout_marginBottom="12dp"
+			android:overScrollMode="never">
 			<androidx.appcompat.widget.LinearLayoutCompat
 				android:id="@+id/main_contetnt_list"
 				android:layout_width="match_parent"
@@ -49,7 +53,7 @@
 					android:orientation="horizontal"
 					android:layout_gravity="center_vertical|fill_horizontal"
 					android:gravity="center_vertical|fill_horizontal"
-					android:backgroundTint="?attr/colorErrorContainer"
+					android:backgroundTint="?attr/colorSurfaceContainer"
 					android:background="@drawable/rounded_container"
 					android:paddingTop="8dp"
 					android:paddingEnd="8dp"
@@ -61,14 +65,14 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:importantForAccessibility="no"
-						app:tint="?attr/colorError"
+						app:tint="?attr/colorOnErrorContainer"
 						android:src="@drawable/ic_info_twotone"/>
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:textSize="?attr/textSizeSmall"
 						android:text="@string/main_missingperms_summary_text"
-						android:textColor="?attr/colorError"
+						android:textColor="?attr/colorOnErrorContainer"
 						android:textStyle="bold"
 						android:textAlignment="center"/>
 				</androidx.appcompat.widget.LinearLayoutCompat>
@@ -79,7 +83,7 @@
 					android:orientation="horizontal"
 					android:layout_gravity="center_vertical|fill_horizontal"
 					android:gravity="center_vertical|fill_horizontal"
-					android:backgroundTint="?attr/colorOnBackground"
+					android:backgroundTint="?attr/colorSurfaceContainer"
 					android:background="@drawable/rounded_container"
 					android:paddingTop="8dp"
 					android:paddingEnd="8dp"
@@ -91,7 +95,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:importantForAccessibility="no"
-						app:tint="?attr/colorOnPrimary"
+						app:tint="?attr/colorOnSurface"
 						android:src="@drawable/ic_info_twotone"/>
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="wrap_content"
@@ -99,7 +103,7 @@
 						android:layout_weight="2"
 						android:textSize="?attr/textSizeSmall"
 						android:text="@string/main_allgood_summary_text"
-						android:textColor="?attr/colorOnPrimary"
+						android:textColor="?attr/colorOnSurface"
 						android:textStyle="bold"
 						android:textAlignment="center"/>
 					<androidx.appcompat.widget.AppCompatButton
@@ -107,8 +111,8 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:background="@drawable/button_background"
-						android:backgroundTint="?attr/colorPrimaryContainer"
-						android:textColor="?attr/colorOnPrimaryContainer"
+						android:backgroundTint="?attr/colorPrimary"
+						android:textColor="?attr/colorOnPrimary"
 						android:text="@string/main_allgood_summary_text_button"
 						android:textAllCaps="false"
 						android:textSize="?attr/textSizeSmall"/>
@@ -125,21 +129,21 @@
 					android:layout_marginStart="12dp"
 					android:layout_marginEnd="12dp"
 					android:layout_marginTop="16dp"
-					android:backgroundTint="?attr/colorErrorContainer"
+					android:backgroundTint="?attr/colorSurfaceContainer"
 					android:background="@drawable/rounded_container">
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="?attr/textSizeMedium"
 						android:text="@string/main_missingperms_accessibility"
-						android:textColor="?attr/colorError"
+						android:textColor="?attr/colorOnErrorContainer"
 						android:textStyle="bold"/>
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="?attr/textSizeSmall"
 						android:text="@string/main_missingperms_accessibility_description"
-						android:textColor="?attr/colorError"/>
+						android:textColor="?attr/colorOnErrorContainer"/>
 					<androidx.appcompat.widget.AppCompatButton
 						android:id="@+id/accessibility_grant_popup_button"
 						android:layout_gravity="center"
@@ -150,8 +154,8 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:background="@drawable/button_background"
-						android:backgroundTint="?attr/colorOnError"
-						android:textColor="?attr/colorOnErrorContainer"
+						android:backgroundTint="?attr/colorError"
+						android:textColor="?attr/colorOnError"
 						android:text="@string/main_missingperms_accessibility_button"
 						android:textAllCaps="false"
 						android:textSize="?attr/textSizeSmall"/>
@@ -168,21 +172,21 @@
 					android:layout_marginStart="12dp"
 					android:layout_marginEnd="12dp"
 					android:layout_marginTop="16dp"
-					android:backgroundTint="?attr/colorErrorContainer"
+					android:backgroundTint="?attr/colorSurfaceContainer"
 					android:background="@drawable/rounded_container">
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="?attr/textSizeMedium"
 						android:text="@string/main_missingperms_navigation"
-						android:textColor="?attr/colorError"
+						android:textColor="?attr/colorOnErrorContainer"
 						android:textStyle="bold"/>
 					<androidx.appcompat.widget.AppCompatTextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="?attr/textSizeSmall"
 						android:text="@string/main_missingperms_navigation_description"
-						android:textColor="?attr/colorError"/>
+						android:textColor="?attr/colorOnErrorContainer"/>
 					<androidx.appcompat.widget.AppCompatButton
 						android:id="@+id/navigation_wrong_popup_button"
 						android:layout_gravity="center"
@@ -193,12 +197,29 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:background="@drawable/button_background"
-						android:backgroundTint="?attr/colorOnError"
-						android:textColor="?attr/colorOnErrorContainer"
+						android:backgroundTint="?attr/colorError"
+						android:textColor="?attr/colorErrorContainer"
 						android:text="@string/main_missingperms_navigation_button"
 						android:textAllCaps="false"
 						android:textSize="?attr/textSizeSmall"/>
 				</androidx.appcompat.widget.LinearLayoutCompat>
+				
+				
+				
+				
+				
+				<!--Debug Views-->
+				<androidx.appcompat.widget.AppCompatButton
+					android:visibility="gone"
+					android:id="@+id/testing"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:background="@drawable/button_background"
+					android:backgroundTint="?attr/colorPrimaryContainer"
+					android:textColor="?attr/colorOnPrimaryContainer"
+					android:text="@string/main_allgood_summary_text_button"
+					android:textAllCaps="false"
+					android:textSize="?attr/textSizeSmall"/>
 			</androidx.appcompat.widget.LinearLayoutCompat>
 		</androidx.core.widget.NestedScrollView>
 	</androidx.constraintlayout.widget.ConstraintLayout>
