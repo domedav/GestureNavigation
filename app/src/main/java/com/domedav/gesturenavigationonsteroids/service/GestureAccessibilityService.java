@@ -321,7 +321,7 @@ public class GestureAccessibilityService extends AccessibilityService implements
 			}
 		} else if (pointerExecutionCount == 2) {
 			// two pointer events
-			if(deltaY[1] > 25 && velocityY[1] >= 10){
+			if(deltaY[1] >= 25 && velocityY[1] >= 10){
 				Intent intent = new Intent();
 				intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -330,8 +330,12 @@ public class GestureAccessibilityService extends AccessibilityService implements
 				} catch (Exception ignored) {
 				}
 			}
-			else if(deltaY[1] < -10 && deltaY[0] > 25){
-				performGlobalAction(GLOBAL_ACTION_ACCESSIBILITY_ALL_APPS);
+			else if(deltaY[1] < -10){
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+					performGlobalAction(GLOBAL_ACTION_ACCESSIBILITY_ALL_APPS);
+					return;
+				}
+				performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
 			}
 		}
 	}

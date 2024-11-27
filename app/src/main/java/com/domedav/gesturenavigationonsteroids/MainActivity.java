@@ -12,6 +12,9 @@ import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.domedav.gesturenavigationonsteroids.checker.AccessibilityCheckUtils;
+import com.domedav.gesturenavigationonsteroids.checker.BatteryCheckUtils;
 import com.domedav.gesturenavigationonsteroids.service.GestureAccessibilityService;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -54,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
 				return;
 			}
 			Intent intent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			getApplicationContext().startActivity(intent);
+		});
+		
+		findViewById(R.id.battery_unoptimal_button).setOnClickListener(v -> {
+			Intent intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			getApplicationContext().startActivity(intent);
 		});
@@ -118,8 +127,12 @@ public class MainActivity extends AppCompatActivity {
 		return AccessibilityCheckUtils.isThreeButtonNavigationEnabled(getApplicationContext());
 	}
 	
+	private boolean hasTurnedOffBatteryOptimizations(){
+		return BatteryCheckUtils.isBatteryOptmizationsOff(getApplicationContext());
+	}
+	
 	private void checkAbleToProceed(){
-		if(hasEnabledAccessibilityService() && hasEnabledThreeButtonNavigation()){
+		if(hasEnabledAccessibilityService() && hasEnabledThreeButtonNavigation() && hasTurnedOffBatteryOptimizations()){
 			Intent intent = new Intent(getApplicationContext(), GestureAccessibilityService.class);
 			startService(intent);
 		}
@@ -133,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
 		findViewById(R.id.navigation_wrong_popup).setVisibility(!visible ? View.VISIBLE : View.GONE);
 	}
 	
+	private void setVisibilityOfBatteryOptimizationPopup(boolean visible) {
+		findViewById(R.id.navigation_batteryopotimize_popup).setVisibility(!visible ? View.VISIBLE : View.GONE);
+	}
+	
 	private void setVisibilityOfMainContent(boolean visible){
 		findViewById(R.id.main_issues_popups_notifier).setVisibility(!visible ? View.VISIBLE : View.GONE);
 		
@@ -142,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 	private void setupUI(){
 		setVisibilityOfAccessibilityMissingPopup(hasEnabledAccessibilityService());
 		setVisibilityOfThreeButtonNavigationPopup(hasEnabledThreeButtonNavigation());
+		setVisibilityOfBatteryOptimizationPopup(hasTurnedOffBatteryOptimizations());
 		setVisibilityOfMainContent(hasEnabledAccessibilityService() && hasEnabledThreeButtonNavigation());
 		checkAbleToProceed();
 	}

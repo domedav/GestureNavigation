@@ -9,6 +9,7 @@
 		<item name="textSizeBig">32sp</item>
 		<item name="textSizeMedium">22sp</item>
 		<item name="textSizeSmall">14sp</item>
+		<item name="textSizeHint">10sp</item>
 		<item name="android:textColor">?attr/colorOnBackground</item>
 		<item name="backgroundColor">?attr/backgroundColor</item>
 	</style>

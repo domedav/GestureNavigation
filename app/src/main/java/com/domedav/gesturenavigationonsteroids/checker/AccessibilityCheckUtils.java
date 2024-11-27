@@ -1,4 +1,4 @@
-package com.domedav.gesturenavigationonsteroids;
+package com.domedav.gesturenavigationonsteroids.checker;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.provider.Settings;

@@ -20,11 +20,17 @@
 	<string name="main_relaunch_service_positive_button">Proceed</string>
 	<string name="main_relaunch_service_negative_button">Cancel</string>
 	
-	<string name="main_missingperms_accessibility">Grant accessibility permissions to the app!</string>
+	<string name="main_missingperms_accessibility">Missing accessibility permissions!</string>
 	<string name="main_missingperms_accessibility_description">Please find the app in the settings menu, and allow it to use accessibility.</string>
 	<string name="main_missingperms_accessibility_button">Grant Permissions</string>
 	
 	<string name="main_missingperms_navigation">You are not using the 3 button navigation!</string>
 	<string name="main_missingperms_navigation_description">Please witch your navigation mode to the 3 buttons (old style), as having multiple gesture navigation will freak out your phone.</string>
 	<string name="main_missingperms_navigation_button">Change Navigation</string>
+	
+	<string name="main_missingperms_battery">Battery optimizations are on!</string>
+	<string name="main_missingperms_battery_description">Please set battery optimizations (background usage) to unrestricted, so the app can always function, even when the phone is running low on battery.</string>
+	<string name="main_missingperms_battery_button">Turn off</string>
+	
+	<string name="main_missingperms_not_mandatory_title">This setting is not mandatory, but highly recommended</string>
 </resources>
