@@ -12,6 +12,7 @@ If you are courious about this app, feel free to give it a try. Its really simpl
   
 (Multiple swipe gestures)
 - Swipe up then hold until the bar changes color, then swipe up again: to quickly access the camera 📷
+- Swipe up then hold until the bar changes color, then swupe up from the bottom then down without letting go: for quick split screen 🗡
 
 ---
 ### 1.0.0
