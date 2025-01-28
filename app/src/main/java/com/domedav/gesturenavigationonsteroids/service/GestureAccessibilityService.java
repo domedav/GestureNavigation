@@ -147,15 +147,19 @@ public class GestureAccessibilityService extends AccessibilityService implements
 		
 		String manufacturer = Build.MANUFACTURER.toLowerCase();
 		
-		boolean hasCustomNavigationBar = manufacturer.contains("huawei") || getNavigationBarOffset() != (48 * scale);
 		
-		if(hasCustomNavigationBar){
-			layoutParams.y = -(int) (HEIGHT_IN_DP * scale);
+		int layoutY;
+		if(manufacturer.contains("huawei")){
+			layoutY = -(int) (HEIGHT_IN_DP * scale);
+		}
+		else if(manufacturer.contains("nubia")){
+			layoutY = (int)(HEIGHT_IN_DP * scale) * 2;
 		}
 		else{
-			layoutParams.y = getNavigationBarOffset() - (int)(HEIGHT_IN_DP * scale);
+			layoutY = getNavigationBarOffset() - (int)(HEIGHT_IN_DP * scale);
 		}
 		
+		layoutParams.y = layoutY;
 		layoutParams.verticalMargin = 0f;
 		
 		layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;

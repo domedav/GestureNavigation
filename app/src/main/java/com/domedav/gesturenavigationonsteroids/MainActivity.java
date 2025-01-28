@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.graphics.Insets;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 		setupUI();
 	}
 	
-	protected void onNewIntent(Intent intent){
+	protected void onNewIntent(@NonNull Intent intent){
 		super.onNewIntent(intent);
 		setupUI();
 	}
