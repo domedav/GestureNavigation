@@ -34,6 +34,8 @@ public class GestureAccessibilityService extends AccessibilityService implements
 	@SuppressLint("StaticFieldLeak")
 	private static GestureAccessibilityService instance = null;
 	
+	private boolean isLandscape = false;
+	
 	private static final int HEIGHT_IN_DP = 12;
 	private static final int DELAY_FOR_SECONDARY_ACTIONS_MS = 380;
 	private static final int TIME_TO_EXECUTE_SECONDARY_ACTIONS_MS = 300;
@@ -63,7 +65,11 @@ public class GestureAccessibilityService extends AccessibilityService implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		forceRepaint();
+		isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
+		if(!forceRepaint()){ // if no instance, restart service
+			Intent intent = new Intent(getApplicationContext(), GestureAccessibilityService.class);
+			startService(intent);
+		}
 	}
 	
 	@Override
@@ -124,7 +130,7 @@ public class GestureAccessibilityService extends AccessibilityService implements
 	
 	@SuppressLint("ClickableViewAccessibility")
 	private void createOverlay(){
-		if(hasOverlay || layout != null){
+		if(hasOverlay || layout != null || getNavigationBarOffset() < 0){
 			return;
 		}
 		hasOverlay = true;
@@ -139,31 +145,41 @@ public class GestureAccessibilityService extends AccessibilityService implements
 		Display display = windowManager.getDefaultDisplay();
 		Point screenSize = new Point();
 		display.getSize(screenSize);
-		layoutParams.width = screenSize.x;
-		layoutParams.x = 0;
-		
 		float scale = getResources().getDisplayMetrics().density;
-		layoutParams.height = (int) (HEIGHT_IN_DP * scale);
-		
-		String manufacturer = Build.MANUFACTURER.toLowerCase();
-		
-		
-		int layoutY;
-		if(manufacturer.contains("huawei")){
-			layoutY = -(int) (HEIGHT_IN_DP * scale);
-		}
-		else if(manufacturer.contains("nubia")){
-			layoutY = (int)(HEIGHT_IN_DP * scale) * 2;
+		if(!isLandscape){
+			layoutParams.width = screenSize.x;
+			layoutParams.x = 0;
+			
+			layoutParams.height = (int) (HEIGHT_IN_DP * scale);
 		}
 		else{
-			layoutY = getNavigationBarOffset() - (int)(HEIGHT_IN_DP * scale);
+			layoutParams.height = screenSize.y;
+			layoutParams.y = 0;
+			
+			layoutParams.width = (int) (HEIGHT_IN_DP * scale);
 		}
 		
-		layoutParams.y = layoutY;
-		layoutParams.verticalMargin = 0f;
+		String manufacturer = Build.MANUFACTURER.toLowerCase();
+		int layoutXY;
+		if(manufacturer.contains("huawei")){ // navbar top is 0
+			layoutXY = -(int) (HEIGHT_IN_DP * scale);
+		}
+		else{ // navbar top is not 0
+			layoutXY = getNavigationBarOffset() - (int) (HEIGHT_IN_DP * scale);
+		}
+		
+		if(!isLandscape){
+			layoutParams.y = layoutXY;
+			layoutParams.verticalMargin = 0f;
+			layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+		}
+		else{
+			layoutParams.x = layoutXY;
+			layoutParams.horizontalMargin = 0f;
+			layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+		}
 		
 		layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-		layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 		layoutParams.format = PixelFormat.TRANSPARENT;
 		layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 				| WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -184,14 +200,34 @@ public class GestureAccessibilityService extends AccessibilityService implements
 		imageView = new ImageView(getApplicationContext());
 		imageView.setImageDrawable(getBarDrawableByState(false));
 		
-		LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT
-		);
-		imageParams.gravity = Gravity.CENTER_HORIZONTAL;
-		imageParams.leftMargin = (int) (layoutParams.width * 0.35);
-		imageParams.rightMargin = (int) (layoutParams.width * 0.35);
-		imageParams.height = (int)(2.5 * scale);
+		LinearLayout.LayoutParams imageParams;
+		if(!isLandscape){
+			imageParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT
+			);
+		}
+		else{
+			imageParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.MATCH_PARENT
+			);
+		}
+		
+		
+		if(!isLandscape){
+			imageParams.gravity = Gravity.CENTER_HORIZONTAL;
+			imageParams.leftMargin = (int) (layoutParams.width * 0.35);
+			imageParams.rightMargin = (int) (layoutParams.width * 0.35);
+			imageParams.height = (int)((HEIGHT_IN_DP / 6.0) * scale);
+		}
+		else{
+			imageParams.gravity = Gravity.CENTER_VERTICAL;
+			imageParams.topMargin = (int) (layoutParams.height * 0.35);
+			imageParams.bottomMargin = (int) (layoutParams.height * 0.35);
+			imageParams.width = (int)((HEIGHT_IN_DP / 6.0) * scale);
+		}
+		
 		imageView.setLayoutParams(imageParams);
 		imageView.setScaleType(ImageView.ScaleType.CENTER);
 		
@@ -286,7 +322,11 @@ public class GestureAccessibilityService extends AccessibilityService implements
 				velocityX[pointerExecutionCount - 1] = Math.abs(deltaX[pointerExecutionCount - 1] / deltaTimeSec) * (2.54f / dpi);
 				velocityY[pointerExecutionCount - 1] = Math.abs(deltaY[pointerExecutionCount - 1] / deltaTimeSec) * (2.54f / dpi);
 				
-				delayedRunnable = () -> handleAction(deltaX, deltaY, velocityX, velocityY);
+				delayedRunnable = () -> handleAction(
+						!isLandscape ? deltaX : deltaY,
+						!isLandscape ? deltaY : deltaX,
+						!isLandscape ? velocityX : velocityY,
+						!isLandscape ? velocityY : velocityX); //flip when landscape, as directions change
 				handler.postDelayed(delayedRunnable, deltaTimeSec >= (DELAY_FOR_SECONDARY_ACTIONS_MS / 1000f) ? TIME_TO_EXECUTE_SECONDARY_ACTIONS_MS : 0);
 				break;
 			default:
@@ -370,7 +410,7 @@ public class GestureAccessibilityService extends AccessibilityService implements
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 			WindowInsets insets = ((WindowManager) getSystemService(WINDOW_SERVICE)).getCurrentWindowMetrics().getWindowInsets();
 			Insets navBarInsets = insets.getInsets(WindowInsets.Type.navigationBars());
-			return navBarInsets.bottom;
+			return !isLandscape ? navBarInsets.bottom : navBarInsets.right;
 		} else {
 			@SuppressLint({"DiscouragedApi", "InternalInsetResource"})
 			int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
