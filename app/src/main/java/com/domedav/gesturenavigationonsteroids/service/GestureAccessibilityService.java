@@ -176,7 +176,7 @@ public class GestureAccessibilityService extends AccessibilityService implements
 		else{
 			layoutParams.x = layoutXY;
 			layoutParams.horizontalMargin = 0f;
-			layoutParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+			layoutParams.gravity = Gravity.END | Gravity.CENTER_VERTICAL;
 		}
 		
 		layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;

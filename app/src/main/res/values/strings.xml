@@ -3,10 +3,10 @@
 	<string name="accessibility_service_summary">Use your phone with modern gestures</string>
 	<string name="accessibility_service_description">If you disallow the application to use accessibility, it will not work at all!\n\tWhy is this needed?\n\t• The application can\'t do gesture detection without this\n\t• The application can\'t provide you with its core functionality without this\n\nHow to use?\nSingle Swipe\n\t• Swipe up quickly to get to your home\n\t• Swipe up quickly then hold for a bit to see recent applications\n\t• Swipe from the left or right quickly to the center to go back\n\t• Swipe from the left or right slowly to the center to take a screenshot\n\t• Swipe up and down without letting go to see your notifications\nDouble Swipe\n(Swipe up first then hold until you see the bar change colors)\n\t• Swipe up again to open the camera</string>
 	
-	<string name="main_huawei_toast_manual_settings_navigation_header">Please switch navigation modes</string>
-	<string name="main_huawei_toast_manual_settings_navigation_description">Search for navigation in the settings, and set it to the 3 button navigation.</string>
-	<string name="main_huawei_toast_positive_button">Proceed</string>
-	<string name="main_huawei_toast_negative_button">Cancel</string>
+	<string name="main_toast_manual_settings_navigation_header">Please switch navigation modes</string>
+	<string name="main_toast_manual_settings_navigation_description">Search for navigation in the settings, and set it to the 3 button navigation.</string>
+	<string name="main_toast_positive_button">Proceed</string>
+	<string name="main_toast_negative_button">Cancel</string>
 	
 	<string name="main_missingperms_summary_text">Fix the following issues to continue!</string>
 	

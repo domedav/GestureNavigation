@@ -40,26 +40,19 @@ public class MainActivity extends AppCompatActivity {
 		});
 		
 		findViewById(R.id.navigation_wrong_popup_button).setOnClickListener(v -> {
-			if (android.os.Build.MANUFACTURER.toLowerCase().contains("huawei")) {
-				// Huawei-specific settings
-				showMaterialDialog(
-						getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_header),
-						getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_description),
-						getResources().getString(R.string.main_huawei_toast_positive_button),
-						getResources().getString(R.string.main_huawei_toast_negative_button),
-						() -> {
-							Intent intent = new Intent(Settings.ACTION_SETTINGS);
-							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-							Toast.makeText(getApplicationContext(), getResources().getString(R.string.main_huawei_toast_manual_settings_navigation_description), Toast.LENGTH_LONG).show();
-						},
-						() -> {}
-				);
-				return;
-			}
-			Intent intent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			getApplicationContext().startActivity(intent);
+			showMaterialDialog(
+					getResources().getString(R.string.main_toast_manual_settings_navigation_header),
+					getResources().getString(R.string.main_toast_manual_settings_navigation_description),
+					getResources().getString(R.string.main_toast_positive_button),
+					getResources().getString(R.string.main_toast_negative_button),
+					() -> {
+						Intent intent = new Intent(Settings.ACTION_SETTINGS);
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+						Toast.makeText(getApplicationContext(), getResources().getString(R.string.main_toast_manual_settings_navigation_description), Toast.LENGTH_LONG).show();
+					},
+					() -> {}
+			);
 		});
 		
 		findViewById(R.id.battery_unoptimal_button).setOnClickListener(v -> {
